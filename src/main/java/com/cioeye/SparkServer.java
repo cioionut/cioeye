@@ -41,19 +41,20 @@ public class SparkServer {
         Path indexPath = FileSystems.getDefault().getPath(indexDirPath);
         RoAnalyzer analyzer = new RoAnalyzer();
 
-        Map<String, String> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("search_label", "Caută");
         map.put("title", "CioEye");
 
         // The index.jade template file is in the resources/templates directory
         get("/", (req, res) -> new ModelAndView(map, "index"), new JadeTemplateEngine());
-        get("/search/:querystr", (req, res) -> {
+        get("/search", (req, res) -> {
             try {
                 Directory indexDir = FSDirectory.open(indexPath);
                 IndexReader reader = DirectoryReader.open(indexDir);
                 Searcher searcher = new Searcher(reader, analyzer);
 
-                search(req.params(":querystr"), searcher);
+                Map<String, String> searchResults = search(req.queryParams("querystr"), searcher);
+                map.put("searchResults", searchResults);
                 reader.close();
             } catch (IOException | ParseException | InvalidTokenOffsetsException e) {
                 e.printStackTrace();
@@ -84,13 +85,15 @@ public class SparkServer {
                 +(endTime-startTime)+" ms");
     }
 
-    public static void search(String searchQuery, Searcher searcher)
+    public static Map<String, String> search(String searchQuery, Searcher searcher)
             throws IOException, ParseException, InvalidTokenOffsetsException {
         long startTime = System.currentTimeMillis();
 
         TopDocs hits = searcher.search(searchQuery);
 
         long endTime = System.currentTimeMillis();
+
+        Map<String, String> map = new HashMap<>();
 
         System.out.println(hits.totalHits +
                 " documents found. Time :" + (endTime - startTime));
@@ -99,9 +102,13 @@ public class SparkServer {
             String[] fragments = searcher.getHlFragments(searchQuery, new RoAnalyzer(), doc);
             System.out.println("File: "
                     + doc.get(LuceneConstants.FILE_PATH));
+            StringBuilder hlfrag = new StringBuilder();
             for(String frag : fragments) {
                 System.out.printf(frag + '\n');
+                hlfrag.append(frag).append('\n');
             }
+            map.put(doc.get(LuceneConstants.FILE_NAME), hlfrag.toString());
         }
+        return map;
     }
 }

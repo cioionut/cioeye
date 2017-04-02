@@ -17,10 +17,16 @@ body
     .container
         h1 #{locales.title}
 
-        form(method='get')
+        form(method='get', action='search')
             .form-group
-                input.form-control(type='text_query', placeholder='text')
+                input.form-control(type='text', name='querystr', placeholder='text')
             button.btn.btn-info(type='submit') #{locales.search_label}
+        if searchResults
+            each text, title in searchResults
+                .media
+                h3 #{title}
+                p !{text}
+
 
     // jQuery (necessary for Bootstrap's JavaScript plugins)
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
