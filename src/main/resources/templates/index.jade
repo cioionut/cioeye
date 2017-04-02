@@ -16,16 +16,19 @@ head
 body
     .container
         h1 #{locales.title}
-
-        form(method='get', action='search')
-            .form-group
-                input.form-control(type='text', name='querystr', placeholder='text')
-            button.btn.btn-info(type='submit') #{locales.search_label}
+        .row
+            .col-md-12
+                form.col-md-4(method='get', action='search')
+                        input.form-control(type='text', name='querystr', placeholder='...')
+                    button.btn.btn-info(type='submit') #{locales.search_label}
+        hr
+        .row
         if searchResults
             each text, title in searchResults
-                .media
-                h3 #{title}
-                p !{text}
+                .list-group
+                    a.list-group-item
+                        h3 #{title}
+                        p !{text}
 
 
     // jQuery (necessary for Bootstrap's JavaScript plugins)
