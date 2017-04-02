@@ -6,6 +6,7 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.core.LowerCaseFilter;
 import org.apache.lucene.analysis.core.StopFilter;
+import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilter;
 import org.apache.lucene.analysis.ro.RomanianAnalyzer;
 import org.apache.lucene.analysis.snowball.SnowballFilter;
 import org.apache.lucene.analysis.standard.StandardFilter;
@@ -17,18 +18,11 @@ import java.util.Set;
 
 
 public class RoAnalyzer extends Analyzer {
-    private String language;
+    private static final String language = "Romanian";
     private Set<String> stopWords;
-
-
-    public RoAnalyzer(String language) {
-        this.setStopWords();
-        this.language = language;
-    }
 
     RoAnalyzer() {
         this.setStopWords();
-        this.language = "Romanian";
     }
 
     @Override
@@ -38,6 +32,7 @@ public class RoAnalyzer extends Analyzer {
 
         result = new LowerCaseFilter(result);
         result = new StopFilter(result, CharArraySet.copy(stopWords));
+        result = new ASCIIFoldingFilter(result);
         result = new SnowballFilter(result, language);
 
         return new TokenStreamComponents(source, result);

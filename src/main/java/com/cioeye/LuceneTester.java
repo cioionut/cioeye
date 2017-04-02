@@ -37,7 +37,7 @@ public class LuceneTester {
             tester.createIndex();
 
             String querystr = args.length > 0 ? args[0] : "lucene";
-            querystr = "mama";
+            querystr = "camasa";
             tester.search(querystr);
         } catch (IOException | ParseException e) {
             e.printStackTrace();
@@ -65,37 +65,37 @@ public class LuceneTester {
     }
 
     private void createIndex() throws IOException{
-        Path indexPath = FileSystems.getDefault().getPath(indexDirPath);
-        indexDir =
-        //        FSDirectory.open(indexPath);
-                  new RAMDirectory();
-
-        indexer = new Indexer(indexDir, analyzer);
-        int numIndexed;
-        long startTime = System.currentTimeMillis();
-        numIndexed = indexer.createIndex(dataDir, new TextFileFilter());
-        long endTime = System.currentTimeMillis();
-        indexer.close();
-        System.out.println(numIndexed+" File indexed, time taken: "
-                +(endTime-startTime)+" ms");
+//        Path indexPath = FileSystems.getDefault().getPath(indexDirPath);
+//        indexDir =
+//        //        FSDirectory.open(indexPath);
+//                  new RAMDirectory();
+//
+//        indexer = new Indexer(indexDir, analyzer);
+//        int numIndexed;
+//        long startTime = System.currentTimeMillis();
+//        numIndexed = indexer.createIndex(dataDir, new TextFileFilter());
+//        long endTime = System.currentTimeMillis();
+//        indexer.close();
+//        System.out.println(numIndexed+" File indexed, time taken: "
+//                +(endTime-startTime)+" ms");
     }
 
     private void search(String searchQuery) throws IOException, ParseException {
-        IndexReader reader = DirectoryReader.open(indexDir);
-        searcher = new Searcher(reader, analyzer);
-
-        long startTime = System.currentTimeMillis();
-
-        TopDocs hits = searcher.search(searchQuery);
-        long endTime = System.currentTimeMillis();
-
-        System.out.println(hits.totalHits +
-                " documents found. Time :" + (endTime - startTime));
-        for(ScoreDoc scoreDoc : hits.scoreDocs) {
-            Document doc = searcher.getDocument(scoreDoc);
-            System.out.println("File: "
-                    + doc.get(LuceneConstants.FILE_PATH));
-        }
-        reader.close();
+//        IndexReader reader = DirectoryReader.open(indexDir);
+//        searcher = new Searcher(reader, analyzer);
+//
+//        long startTime = System.currentTimeMillis();
+//
+//        TopDocs hits = searcher.search(searchQuery);
+//        long endTime = System.currentTimeMillis();
+//
+//        System.out.println(hits.totalHits +
+//                " documents found. Time :" + (endTime - startTime));
+//        for(ScoreDoc scoreDoc : hits.scoreDocs) {
+//            Document doc = searcher.getDocument(scoreDoc);
+//            System.out.println("File: "
+//                    + doc.get(LuceneConstants.FILE_PATH));
+//        }
+//        reader.close();
     }
 }

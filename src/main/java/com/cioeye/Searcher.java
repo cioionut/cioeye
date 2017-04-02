@@ -11,11 +11,15 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.highlight.Highlighter;
+import org.apache.lucene.search.highlight.InvalidTokenOffsetsException;
+import org.apache.lucene.search.highlight.QueryScorer;
+import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
 
 class Searcher {
 
     private IndexSearcher indexSearcher;
-    private QueryParser queryParser;
+    public QueryParser queryParser;
 
     Searcher(IndexReader reader, RoAnalyzer analyzer) throws IOException {
         indexSearcher = new IndexSearcher(reader);
@@ -25,6 +29,16 @@ class Searcher {
     TopDocs search(String searchQuery) throws IOException, ParseException {
         Query query = queryParser.parse(searchQuery);
         return indexSearcher.search(query, LuceneConstants.MAX_SEARCH);
+    }
+
+    String[] getHlFragments(String searchQuery, RoAnalyzer analyzer, Document doc)
+            throws IOException, ParseException, InvalidTokenOffsetsException {
+        Query query = queryParser.parse(searchQuery);
+        SimpleHTMLFormatter htmlFormatter = new SimpleHTMLFormatter();
+        Highlighter highlighter = new Highlighter(htmlFormatter,
+                new QueryScorer(query));
+        return highlighter.getBestFragments(analyzer, LuceneConstants.CONTENTS,
+                doc.get(LuceneConstants.CONTENTS), 4);
     }
 
     Document getDocument(ScoreDoc scoreDoc) throws IOException{

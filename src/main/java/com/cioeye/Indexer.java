@@ -1,9 +1,6 @@
 package com.cioeye;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
@@ -34,13 +31,28 @@ class Indexer {
         writer.close();
     }
 
+    private static String readFileString(String file) {
+        // ref: http://makble.com/how-to-do-lucene-search-highlight-example
+        StringBuilder text = new StringBuilder();
+        try {
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    new FileInputStream(new File(file)), "UTF8"));
+            String line;
+            while ((line = in.readLine()) != null) {
+                text.append(line).append("\r\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return text.toString();
+    }
     private Document getDocument(File file) throws IOException {
         Document document = new Document();
-
         //index file contents
         TextField contentField = new TextField(
                 LuceneConstants.CONTENTS,
-                new FileReader(file));
+                readFileString(file.getCanonicalPath()),
+                Field.Store.YES);
         //index file name
         StringField fileNameField = new StringField(
                 LuceneConstants.FILE_NAME,

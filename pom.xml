@@ -39,6 +39,13 @@
             <artifactId>lucene-analyzers-common</artifactId>
             <version>6.4.2</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-highlighter -->
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-highlighter</artifactId>
+            <version>6.4.2</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-snowball -->
         <dependency>
             <groupId>org.apache.lucene</groupId>
@@ -53,6 +60,11 @@
         <dependency>
             <groupId>com.sparkjava</groupId>
             <artifactId>spark-core</artifactId>
+            <version>2.5.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sparkjava</groupId>
+            <artifactId>spark-template-jade</artifactId>
             <version>2.5.5</version>
         </dependency>
         <dependency>
