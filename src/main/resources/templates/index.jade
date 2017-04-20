@@ -19,16 +19,17 @@ body
         .row
             .col-md-12
                 form.col-md-4(method='get', action='search')
-                        input.form-control(type='text', name='querystr', placeholder='...')
+                    input.form-control(type='text', name='querystr', placeholder='...')
                     button.btn.btn-info(type='submit') #{locales.search_label}
         hr
         .row
         if searchResults
-            each text, title in searchResults
+            each doc_info in searchResults
                 .list-group
                     a.list-group-item
-                        h3 #{title}
-                        p !{text}
+                        h3 !{doc_info.title}
+                        p !{doc_info.hlfrag}
+                        p Score: #{doc_info.score}
 
 
     // jQuery (necessary for Bootstrap's JavaScript plugins)

@@ -31,8 +31,8 @@ public class RoAnalyzer extends Analyzer {
         TokenStream result = new StandardFilter(source);
 
         result = new LowerCaseFilter(result);
-        result = new StopFilter(result, CharArraySet.copy(stopWords));
         result = new ASCIIFoldingFilter(result);
+        result = new StopFilter(result, CharArraySet.copy(stopWords));
         result = new SnowballFilter(result, language);
 
         return new TokenStreamComponents(source, result);
