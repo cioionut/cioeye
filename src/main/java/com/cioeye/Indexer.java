@@ -6,10 +6,8 @@ import java.nio.file.Path;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.ro.RomanianAnalyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.document.TextField;
+import org.apache.lucene.document.*;
+import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
@@ -49,10 +47,18 @@ class Indexer {
     private Document getDocument(File file) throws IOException {
         Document document = new Document();
         //index file contents
-        TextField contentField = new TextField(
+        FieldType type = new FieldType();
+        type.setStored(true);
+        type.setStoreTermVectors(true);
+        type.setIndexOptions(IndexOptions.DOCS_AND_FREQS);
+        Field contentField = new Field(
                 LuceneConstants.CONTENTS,
                 readFileString(file.getCanonicalPath()),
-                Field.Store.YES);
+                type);
+//        TextField contentField = new TextField(
+//                LuceneConstants.CONTENTS,
+//                readFileString(file.getCanonicalPath()),
+//                Field.Store.YES);
         //index file name
         StringField fileNameField = new StringField(
                 LuceneConstants.FILE_NAME,

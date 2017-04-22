@@ -18,7 +18,7 @@ import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
 
 class Searcher {
 
-    private IndexSearcher indexSearcher;
+    public IndexSearcher indexSearcher;
     public QueryParser queryParser;
 
     Searcher(IndexReader reader, RoAnalyzer analyzer) throws IOException {
