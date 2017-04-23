@@ -74,6 +74,7 @@ public class SparkServer {
                 Directory indexDir = FSDirectory.open(indexPath);
                 Indexer indexer = new Indexer(indexDir, analyzer);
                 createIndex(indexer);
+                indexer.close();
             } catch (IOException err) {
                 err.printStackTrace();
             }
@@ -116,7 +117,7 @@ public class SparkServer {
                 hlfrag.append(frag).append('\n');
             }
             Map<String, Object> doc_map = new HashMap<>();
-            doc_map.put("title", LuceneConstants.FILE_NAME);
+            doc_map.put("title", doc.get(LuceneConstants.FILE_NAME));
             doc_map.put("hlfrag", hlfrag.toString());
             doc_map.put("score", String.format("%.3g%n", scoreDoc.score));
             doc_map.put("tf", termToFreq);

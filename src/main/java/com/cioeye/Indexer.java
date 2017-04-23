@@ -3,6 +3,7 @@ package com.cioeye;
 import java.io.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.nio.file.Files;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.ro.RomanianAnalyzer;
@@ -13,6 +14,9 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.RAMDirectory;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.jsoup.Jsoup;
 
 class Indexer {
 
@@ -29,21 +33,28 @@ class Indexer {
         writer.close();
     }
 
-    private static String readFileString(String file) {
+    private static String readFileString(File file) {
         // ref: http://makble.com/how-to-do-lucene-search-highlight-example
-        StringBuilder text = new StringBuilder();
+        Path filePath = file.toPath();
         try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    new FileInputStream(new File(file)), "UTF8"));
-            String line;
-            while ((line = in.readLine()) != null) {
-                text.append(line).append("\r\n");
+            String content_type = Files.probeContentType(filePath);
+            if (content_type.contains("application/pdf")) {
+                return getTextFromPdf(file);
             }
+            if (content_type.contains("text/plain")) {
+                return getTextFromTxt(file);
+            }
+            if (content_type.contains("text/html")) {
+                return getTextFromHtml(file);
+            }
+
+
         } catch (IOException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         }
-        return text.toString();
+        return "";
     }
+
     private Document getDocument(File file) throws IOException {
         Document document = new Document();
         //index file contents
@@ -53,7 +64,7 @@ class Indexer {
         type.setIndexOptions(IndexOptions.DOCS_AND_FREQS);
         Field contentField = new Field(
                 LuceneConstants.CONTENTS,
-                readFileString(file.getCanonicalPath()),
+                readFileString(file),
                 type);
 //        TextField contentField = new TextField(
 //                LuceneConstants.CONTENTS,
@@ -101,5 +112,30 @@ class Indexer {
             }
         }
         return writer.numDocs();
+    }
+
+    static String getTextFromPdf(File pdfFile) throws IOException {
+        PDDocument doc = PDDocument.load(pdfFile);
+        return new PDFTextStripper().getText(doc);
+    }
+    static String getTextFromTxt(File txtFile) throws IOException {
+        // ref: http://makble.com/how-to-do-lucene-search-highlight-example
+        StringBuilder text = new StringBuilder();
+        try {
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    new FileInputStream(txtFile), "UTF8"));
+            String line;
+            while ((line = in.readLine()) != null) {
+                text.append(line).append("\r\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return text.toString();
+    }
+
+    static String getTextFromHtml(File file) throws IOException {
+        String html = getTextFromTxt(file);
+        return Jsoup.parse(html).text();
     }
 }
