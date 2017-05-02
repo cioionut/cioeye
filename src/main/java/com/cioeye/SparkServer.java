@@ -107,7 +107,7 @@ public class SparkServer {
             System.out.println(scoreDoc.score);
             Document doc = searcher.getDocument(scoreDoc);
             // String[] terms_list = searchQuery.split("\\s+");
-            Map<String, Long> termToFreq = getTF(searchQuery, scoreDoc.doc, searcher);
+            Map<String, String> termToFreq = getTFIDF(searchQuery, scoreDoc.doc, searcher);
             String[] fragments = searcher.getHlFragments(searchQuery, new RoAnalyzer(), doc);
             System.out.println("File: "
                     + doc.get(LuceneConstants.FILE_PATH));
@@ -127,7 +127,7 @@ public class SparkServer {
         return doc_list;
     }
 
-    private static Map<String, Long> getTF(String searchQuery, int nrdoc, Searcher searcher)
+    private static Map<String, String> getTFIDF(String searchQuery, int nrdoc, Searcher searcher)
             throws IOException, ParseException, InvalidTokenOffsetsException {
 
         Map<String, Long> termToFreq = new HashMap<>();
@@ -143,35 +143,54 @@ public class SparkServer {
             // long docCount = itr.docFreq();
             // System.out.println("term: "+termText+", termFreq = "+termFreq+", docCount = "+docCount);
         }
-
-        Map<String, Long> qtermToFreq = new HashMap<>();
-        Query query = searcher.queryParser.parse(searchQuery);
-        WeightedTerm[] wterms = QueryTermExtractor.getTerms(query);
-        for (WeightedTerm wterm : wterms) {
-            String sterm = wterm.getTerm();
-            if (termToFreq.containsKey(sterm)) {
-                qtermToFreq.put(sterm, termToFreq.get(sterm));
+        String[] queryWords = searchQuery.split(" ");
+        Map<String, String> qtermToTfIdf = new HashMap<>();
+        for (String word : queryWords) {
+            Query query = searcher.queryParser.parse(word);
+            WeightedTerm[] wterms = QueryTermExtractor.getTerms(query);
+            for (WeightedTerm wterm : wterms) {
+                String sterm = wterm.getTerm();
+                Term termInstance = new Term(LuceneConstants.CONTENTS, sterm);
+                long df = (long) searcher.indexSearcher.getIndexReader().docFreq(termInstance);
+                long N = searcher.indexSearcher.getIndexReader().numDocs();
+                double idf = 0;
+                if (df != 0) {
+                    idf = Math.log(N / df);
+                }
+                if (termToFreq.containsKey(sterm)) {
+                    double tf_idf = termToFreq.get(sterm) * idf;
+                    qtermToTfIdf.put(word, String.format("%.3g%n", tf_idf));
+                }
             }
         }
-        return qtermToFreq;
+        return qtermToTfIdf;
     }
 
     private static Map<String, Object> getQueryStats(String searchQuery, Searcher searcher)
             throws IOException, ParseException, InvalidTokenOffsetsException {
-
-        Query query = searcher.queryParser.parse(searchQuery);
-        WeightedTerm[] wterms = QueryTermExtractor.getTerms(query);
+        String[] queryWords = searchQuery.split(" ");
         Map<String, Object> qtermToStats = new HashMap<>();
-        for (WeightedTerm wterm : wterms) {
-            Map<String, Long> qtermFreq = new HashMap<>();
-            String sterm = wterm.getTerm();
-            Term termInstance = new Term(LuceneConstants.CONTENTS, sterm);
-            qtermFreq.put("TF",
-                    searcher.indexSearcher.getIndexReader().totalTermFreq(termInstance));
-            qtermFreq.put("IDF",
-                    (long) searcher.indexSearcher.getIndexReader().docFreq(termInstance));
-            qtermToStats.put(sterm, qtermFreq);
+
+        for (String word : queryWords) {
+            Query query = searcher.queryParser.parse(word);
+            WeightedTerm[] wterms = QueryTermExtractor.getTerms(query);
+            for (WeightedTerm wterm : wterms) {
+                Map<String, String> qtermFreq = new HashMap<>();
+                String sterm = wterm.getTerm();
+                Term termInstance = new Term(LuceneConstants.CONTENTS, sterm);
+                // qtermFreq.put("TF",
+                //        searcher.indexSearcher.getIndexReader().totalTermFreq(termInstance));
+                long df = (long) searcher.indexSearcher.getIndexReader().docFreq(termInstance);
+                long N = searcher.indexSearcher.getIndexReader().numDocs();
+                double idf = 0;
+                if (df != 0) {
+                    idf = Math.log(N / df);
+                }
+                qtermFreq.put("IDF", String.format("%.3g%n", idf));
+                qtermToStats.put(word, qtermFreq);
+            }
         }
+
         return qtermToStats;
     }
 }

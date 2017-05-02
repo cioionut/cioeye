@@ -1,0 +1,616 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head2"><meta content="text/html; charset=utf-8" http-equiv="Content-Type" /><meta http-equiv="X-UA-Compatible" content="IE=Edge" /><title>
+	Frontier Utilities
+</title><link rel="shortcut icon" type="image/x-icon" href="favicon.ico" /><link href="styles/reminder.css" rel="stylesheet" type="text/css" /><link href="styles/frontier.css" rel="stylesheet" type="text/css" /><link href="styles/Site.css" rel="stylesheet" type="text/css" /><link href="styles/MainGrid.css" rel="stylesheet" type="text/css" /><link href="styles/prodCard.css" rel="stylesheet" type="text/css" /><link href="styles/jquery.jscrollpane.css" rel="stylesheet" type="text/css" /><link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/redmond/jquery-ui.css" rel="stylesheet" type="text/css" />
+
+    <script src="scripts/jquery.min.js" type="text/javascript"></script>
+    <script src="scripts/tracking-header.js" type="text/javascript"></script>
+    <script src="scripts/enroll_misc_funcs.js" type="text/javascript"></script>
+    <script src="scripts/busyindicator.js" type="text/javascript"></script>
+
+
+    
+    <script src="scripts/dafault_page_scripts.js" type="text/javascript"></script>
+    
+    <style type="text/css">
+        .container-left {
+            float: left;
+            padding: 14px;
+            width: 200px;
+        }
+
+        .show {
+            display: block;
+        }
+
+        .hide {
+            display: none;
+        }
+    </style>
+    
+    <script src="Scripts/floating-1.12.js" type="text/javascript"></script>
+    <link href="styles/sa_popup.css" rel="stylesheet" type="text/css" />
+
+    <style type="text/css">
+        .style1 {
+            width: 216px;
+        }
+
+        .pnlCSS {
+            font-weight: bold;
+            cursor: pointer;
+            border: solid 1px #c0c0c0;
+        }
+    </style>
+</head>
+<body>
+    <form method="post" action="LandingPage.aspx?TDSP_Code=CNP&amp;Ref_ID=PTC&amp;Promo_Code=IPAYGO&amp;Ref_Code=XPTC" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__LASTFOCUS" id="__LASTFOCUS" value="" />
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTEwNzcyNzMwNg8WBB4HU2Vzc2lvbmgeB09MRFREU1AFA0NOUBYCZg9kFgICAw9kFgQCAw8PFgIeBFRleHQFDjEtODc3LTI2MS0xMDI0ZGQCBQ9kFgJmD2QWAmYPZBYCAgEPZBYEZg9kFgJmD2QWCgIBDw8WAh4ISW1hZ2VVcmwFEX4vaW1hZ2VzL2NvcmQuanBnZGQCAw8PFgIfAgUPUG93ZXIgdG8gQ2hvb3NlZGQCBQ8PFgIfAgUDQ05QZGQCCw9kFgICAQ9kFgQCCQ8PZBYCHgpvbktleVByZXNzBQ1DbGVhclN0YXR1cygpZAIZDw9kFgIeBWNsYXNzBQRoaWRlZAIND2QWAmYPZBYCZg9kFgoCAQ8WAh4JaW5uZXJodG1sBZYBPGRpdiBzdHlsZT0idGV4dC1hbGlnbjogY2VudGVyOyI+PGltZyBzcmM9Imh0dHBzOi8vd3d3LmZyb250aWVydXRpbGl0aWVzLmNvbS9pbWFnZXMvMmVhc3lzdGVwc3Rvc2F2aW5ncy1ibHVlQ1kuanBnIiBhbHQ9Ik5lZWQgRWxlY3RyaWNpdHkiID48YnI+PC9kaXY+ZAIDD2QWAmYPZBYCAgEPZBYmAgEPDxYCHwIFE1BBWUcgSW5zdGFudCBPbmxpbmVkZAIDDw8WAh8CBQUzMDMxN2RkAgUPDxYCHwIFE1ByZXBhaWQgRWxlY3RyaWNpdHlkZAIHDw8WAh8CBSzigKIJTm8gQ3JlZGl0IENoZWNrIDxicj4g4oCiCU5vIERlcG9zaXQgPGJyPmRkAgkPDxYCHwIFDTEwLjE8Yj7CojwvYj5kZAILDw8WAh8CBQtFbmVyZ3kgUmF0ZWRkAhEPDxYCHwIFCjEwLjHCoi9rV2hkZAIVDw8WAh8CBQhWYXJpYWJsZWRkAhkPDxYCHwIFBSQwLjAwZGQCHQ8PFgIfAgUFJDAuMDBkZAIhDw8WAh8CZWRkAiUPDxYEHwIFGmNhcmVAZnJvbnRpZXJ1dGlsaXRpZXMuY29tHg1PbkNsaWVudENsaWNrBTZnb3RvVVJMX25ld1dpbmRvdygnbWFpbHRvOmNhcmVAZnJvbnRpZXJ1dGlsaXRpZXMuY29tJylkZAIpDw8WAh8CBQ4xLTg3Ny00MzctNzQ0MmRkAi0PDxYCHgdWaXNpYmxlaGRkAi8PDxYCHwIFzQFObyBkZXBvc2l0LCBubyBjcmVkaXQgY2hlY2sgYW5kIG5vIGNvbnRyYWN0IHRlcm0uIFNhbWUtZGF5IHNlcnZpY2UgYXZhaWxhYmxlLiBTbWFydCBNZXRlciByZXF1aXJlZC4gIFlvdSBjYW4gcmV2aWV3IG1vcmUgZGV0YWlscyBvZiB0aGlzIHBsYW4gYnkgZG93bmxvYWRpbmcgdGhlIGRvY3VtZW50cyBhdCByaWdodC4gJDAuNDkgZGFpbHkgZmVlIGFwcGxpZXMuZGQCNQ8PFgIeC05hdmlnYXRlVXJsBWRodHRwOi8vcG9ydGFsLmZyb250aWVydXRpbGl0aWVzLmNvbS9mcm9udGllcmVmbDIvZWZsdmlld2VyLmFzcHg/bGFuZz1FTiZwcm9kY29kZT1JUEFZR08mdGRzcGNvZGU9Q05QZGQCOQ8PFgIfCQVUaHR0cDovL3BvcnRhbC5mcm9udGllcnV0aWxpdGllcy5jb20vZnJvbnRpZXJlZmwyL2VmbHZpZXdlci5hc3B4P2xhbmc9RU4mcHJvZGNvZGU9VE9TZGQCPQ8PFgIfCQVVaHR0cDovL3BvcnRhbC5mcm9udGllcnV0aWxpdGllcy5jb20vZnJvbnRpZXJlZmwyL2VmbHZpZXdlci5hc3B4P2xhbmc9RU4mcHJvZGNvZGU9WVJBQ2RkAj8PFgIfCGcWAgIBD2QWAgIBDw8WAh8JBVRodHRwOi8vcG9ydGFsLmZyb250aWVydXRpbGl0aWVzLmNvbS9mcm9udGllcmVmbDIvZWZsdmlld2VyLmFzcHg/bGFuZz1FTiZwcm9kY29kZT1QRFNkZAIHDxYCHwYFiQI8YSBocmVmPSJodHRwczovL3d3dy5mcm9udGllcnV0aWxpdGllcy5jb20vUmV2aWV3LUZyb250aWVyLVV0aWxpdGllcyIgdGFyZ2V0PSJfYmxhbmsiIHN0eWxlPSJib3JkZXI6IG5vbmU7Ij48aW1nIHNyYz0iaHR0cHM6Ly93d3cuZnJvbnRpZXJ1dGlsaXRpZXMuY29tL2ltYWdlcy85NTB4MzUwLWJlbG93Zm9sZC1mYW1pbHkuanBnIiBhbHQ9IkNvbW11bml0eSBQYXJ0bmVycyIgd2lkdGg9IjEwMCUiIHN0eWxlPSIgbWFyZ2luLWJvdHRvbTogMjVweDsiPjxicj48L2E+ZAIJDxYCHwZlZAILDxYCHwZlZAIBD2QWAmYPZBYCAgEPZBYCZg9kFgJmD2QWAgIDD2QWBAIFDw8WAh8HBTBmbkNsaWNrTm8oJ2N0bDAwJE1haW5Db250ZW50JG1zZ1BvcHVwJGJ0bk5vJywnJylkZAIHDw8WAh8HBTJmbkNsaWNrWWVzKCdjdGwwMCRNYWluQ29udGVudCRtc2dQb3B1cCRidG5ZZXMnLCcnKWRkGAEFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYCBRZjdGwwMCRNYWluQ29udGVudCRpbWczBRZjdGwwMCRNYWluQ29udGVudCRpbWc0WFXBECCPD6D4EBPpnxFAPSIcMt7sdavaGFoLYYe+66M=" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebEnrollment/WebResource.axd?d=B-EtSNIgzmZn8aXONZypwIHJuiH0dK7oE75Fs_xObSbKV61nOiFRiyees1RiP_6hn6RkCN0e85Vpo2tlzg77kU1sYJYWm5HuA2bb6hlCPPo1&amp;t=635586488020000000" type="text/javascript"></script>
+
+
+<script src="/WebEnrollment/ScriptResource.axd?d=MDLgmcvhGSqbvmK3ARNvFPiVdGMFMobkO8gZoZVYWsAYpSYkjkbp20fpBD2Iawmk_v9UtGitgq0eik6IlMfviSo8DpmN4EPyoMYtjB5Hpk-kKlIaX00ViauN5wgqoryo0&amp;t=23c9c237" type="text/javascript"></script>
+<script src="/WebEnrollment/ScriptResource.axd?d=cZC-evcHvyIXpSx7POR53skd-QanAkWbNVqlc-JkJHhHyjmXB3mNx6PcqfniUJJRxp1nemSjsH_wjWOetAEazONghBI-atSQM2dlfuIvg7-S32rt9xyA9XHQ7EzCDAoMBs0-gDTbPsUoN8rNpmsLaA2&amp;t=23c9c237" type="text/javascript"></script>
+<script src="/WebEnrollment/ScriptResource.axd?d=FWZzG9Cz1g_WLTFSv8xh7GJjrUcvgzXQ-w8HMSVskWdCXElgZGJuoAK0QZuQgwEl9gsIZAvKjY4p-_q2Fdx7lkwmhYVn5OlMZbVZEjO6DMYe6YlvbnZ3k2smK-_hsEts0&amp;t=23c9c237" type="text/javascript"></script>
+<script src="/WebEnrollment/ScriptResource.axd?d=t4JgwrK8fOjAGQNcfzZG139bnavRxYJNkFO4IedVPgkrVBShj9Q2Yh9BuL9JCpRprbIf83-xVHun3Br878ZhNHHhs3IEBssuKZYYqz2ZXssXzmVf1I9_KYPUhGz85hDz9ohh7Dgim78ydo8wHoXGNQ2&amp;t=23c9c237" type="text/javascript"></script>
+<script src="/WebEnrollment/ScriptResource.axd?d=0m6QV29yH3e1wqkMrM9p248xn8ipVBv9mB3c9GMI9k6148yFlOWVCm8f8JnS-OQQO7HMZro53cDjOEBMmoJvWmYdp2GLbbiLyirDepx80Q4RHRSHDIOrNOOvNXa9TRgZow55Yuq_ugYl3TdLxDdcAw2&amp;t=23c9c237" type="text/javascript"></script>
+<script src="/WebEnrollment/ScriptResource.axd?d=QnpWjCTs7r8EDJ8S6RyYJ2m2mCAqOZgPbG_FItI3pqxzFB5bDcI9WE5DdjN_yiEJTq2cjt8GLTF8IvHhEXicfUjzu5I2ZyewafBzz3_tmW417MSTOvJtvpB2pK5VHuGkT1kXPZe8GflfOaNLu-WGLw2&amp;t=23c9c237" type="text/javascript"></script>
+<script src="/WebEnrollment/ScriptResource.axd?d=u-TtQz64uUHiMrvKnHztq_N_VWnD2SBKqmDsp3BYpmyUxIR6Bk7P4sYZc0XSs9dj9MKH4cyrwEcseVWTTViOOM5Tu0xGRopgEQEqOTU3skEqj-ZAw2Q_P1C5NkSkfjen51a5NgG2olJbTf6GdEhROw2&amp;t=23c9c237" type="text/javascript"></script>
+<script src="/WebEnrollment/ScriptResource.axd?d=ESc_PqQ3mKkGlIwjQL3hTG08xuDCxIbT8ICyZUgO3vG0i_c1IgJ0kQvhfoVSfSk-RJkaDy4D6PQLywKzp8L2yN1t-8swB-Xon_G7meitkDIYpaf9MjqnH7wmFXH5e_XYGzbsS2MRoG9k-OeVmEAq7Wum3R7vVLrsRli7ogb-N-s1&amp;t=23c9c237" type="text/javascript"></script>
+<script src="/WebEnrollment/ScriptResource.axd?d=pd9fbTfE7TXeA3oNqe6kES-zLCmk4D-ij--Ojx0xdI4rt_av8wZqGTtYac858xJ-uxcMgzhx5vZOtno9ccfEOWY0Noi36irTakzLtJP_VOaC_EaYN_heUAvfaKtfaGBTBXEMSr0KOVtagNgf21vDRcTp8FfenR3LG8W_EmX6Jkw1&amp;t=23c9c237" type="text/javascript"></script>
+<script src="/WebEnrollment/ScriptResource.axd?d=yWvHLFC6jGlGc6ka1if-_hsPoqicqxXAzSmXyLnu-yCS6X4_lfqlwIZrkvViXNfYqptxMBXJSvwtzymwzwUDsIPzCCuJGEp-wAOCgkuDUpagOwx3kIKelyEngSd8zXASaFjaG_pZCqyPOYpKW9ebEA2&amp;t=23c9c237" type="text/javascript"></script>
+<script src="/WebEnrollment/ScriptResource.axd?d=QX-VlnSZRKLInqkBPUml6z8gPyAxYL-MoAAI3ZXtGH5eUh4qRmtQ1IiM47Y0eqHMmtRb5bMrYVw7xpLW8Y7A_OZfHXGsVNyxEWC6DmTcEIgA-S2W3kbOJyw0VKLN1LhwrkHyHfVQ_Z2oITH-dFMxEA2&amp;t=23c9c237" type="text/javascript"></script>
+<script src="/WebEnrollment/ScriptResource.axd?d=jA3oDEy32EuPCOhKvu-4EdijXaM2FNezn7BEyJUaKc2yBVyA7RA-VoPS1BhMWcWACpmPMV-ZqNvW6mLXhEtJzqrDxOZfFEUPUfedsuFJts5m1-2PoURSpnGOgRZVkHcDWddjyZdPGewhz3waulh5cQ2&amp;t=23c9c237" type="text/javascript"></script>
+<script src="/WebEnrollment/ScriptResource.axd?d=EkLsRf6GjxWadx2c5vxUNHvMbrUPjPp3GWQvjc82MUH-Mhe9eyMswZF0WK371PQawD8QkKAAtkJoS31r9dy8LPKCsBl_lww8_DcOMux4umNNO0_SsOpKx_QdRboIPcqMJlsUzh6uMtP88P5a-vucrw2&amp;t=23c9c237" type="text/javascript"></script>
+<script src="/WebEnrollment/ScriptResource.axd?d=ExZ5MP4P1KpecugHzoaReODXcDHAv6i3syYPg8_WnVNh9xvATrVQegfseOFX02laCzoKRw1I3YhyLR0JIeabKlHP0JBYN7QiOZ63HIDB7XeJBhspZanDv66RDvUg7DBsFwkgEeRUacamTxu1H3oSWCIe7sOvvIqch0mSnNwOcKCsc1JLN8FGsOWchA9braeJ0&amp;t=23c9c237" type="text/javascript"></script>
+<script src="/WebEnrollment/WebResource.axd?d=dxuihJ_-2Y2cyMIUwgPJ4GzrRXRQXCp4oMTmPMFxRmzmN2UmxK0pYC5BoB6U2mC9EekV8qRj8MnHPZB14LZg6ZcqTOqvsSaAFeNEIyRZwQU1&amp;t=635586488020000000" type="text/javascript"></script>
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="B0F2BE6B" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAAhAW2s0o8aPH280Mk85MD4cMnjYLPb1ZhPnkmuMPrAIN1IuA/vYXLWSWL5C72jQI9n0AM2EgW2LZwd5NTjIIpib5LEDin3L60EPXHUU/hCs8xzMFk9bSbc7iX97PBXiJd35JgX6G5uuUCI3aH+VQGEXKuCYytPmIijcfYquTFnaSQl0DuUS5eLXINg6nJOilBGy4PTyFCCAmcH8YjDeGN3v" />
+</div>
+        <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$ScriptManager1', 'form1', ['tctl00$MainContent$upd123','MainContent_upd123','tctl00$MainContent$upProdCard','MainContent_upProdCard','tctl00$MainContent$msgPopup$updPopup','MainContent_msgPopup_updPopup'], ['ctl00$MainContent$btnSignup_big','btnSignup_big','ctl00$MainContent$msgPopup$btnYes','btnYes'], [], 90, 'ctl00');
+//]]>
+</script>
+
+        <script type="text/javascript">
+            var obupage;
+            var olpage;
+            var oulpage;
+
+            window.onbeforeunload = function () {
+                var pg = window.location.pathname.split("/");
+                var frm = pg[pg.length - 1];
+                var obupage = frm.split("?")[0].toLowerCase();
+                //alert(obupage);
+                if ((obupage != 'default.aspx' && obupage.length != 0) && (obupage != 'landingpage.aspx') && (obupage != 'frmquestionthank.aspx') && (obupage != 'partneroffers.aspx') && (obupage != 'dataentryaccordian.aspx')) {
+                    return "Are you sure you wish to leave this page?";
+                }
+            }
+            function cancelEvent(event) {
+                window[event] = function () { null }
+            }
+
+            function fnClickYes(sender, e) {
+                __doPostBack(sender, e);
+            }
+
+            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(EndRequestHandler);
+            function EndRequestHandler(sender, args) {
+                if (args.get_error() != undefined) {
+                    args.set_errorHandled(true);
+                }
+            }
+
+
+        </script>
+
+        <div id="main">
+            <div id="banner">
+                <div id="logo">
+                    <a href="http://www.frontierutilities.com" target="_blank">
+                        <img height="75" src="images/logo.png" alt="Frontier Utilities" title="Frontier Utilities"
+                            width="480" style="border: none;" />
+                    </a>
+                </div>
+                <div id="callus" class="title01">
+                    <span style="color: #f39245; font-size: 24px; font-weight: bold;">Questions?</span><br />
+                    <span style="color: #645c59; font-size: 24px; font-weight: bold;">
+                        <span id="lblPhoneNo">1-877-261-1024</span>
+                    </span>
+                </div>
+            </div>
+            <div class="page">
+                
+    <!-- Service Address pop up-->
+    <div id="updateProgressDiv" style="display: none; height: 40px; width: 40px">
+        <img src="images/spinner_orange.gif" alt="22" />
+    </div>
+    <div id="MainContent_upd123">
+	
+            
+            <table id="box01" width="100%" border="0" cellpadding="0" cellspacing="0" style="position: relative; height: auto; border-collapse: collapse;">
+		<tr>
+			<td align="center">
+                        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td>
+                                    <div id="choose_energy">
+                                        <div id="ce_logo">
+                                            <img id="MainContent_choose_img" src="images/cord.jpg" />
+                                        </div>
+                                        <div id="ce_prod_desc">
+                                            <strong>Welcome
+                                                <span id="MainContent_lblrefName">Power to Choose</span>
+                                                customer! You are on your way to saving money on your monthly electricity. Please
+                                                see your selected plan below. </strong>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" valign="middle">
+                                    <div id="menu-01-next">
+                                        <strong>Currently viewing plans for:</strong> <i>
+                                            <span id="MainContent_lblServAddress" class="tdsp_addr">CNP</span></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a id="MainContent_lnkAddress" class="tdsp_link" href="javascript:__doPostBack(&#39;ctl00$MainContent$lnkAddress&#39;,&#39;&#39;)">Change Zip Code</a>
+                                        
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" valign="middle">
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <!--Products grids -->
+                                    <table id="MainContent_ProdsContainer" width="100%" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td align="center">
+                                                <div id="MainContent_divAboveCards"><div style="text-align: center;"><img src="https://www.frontierutilities.com/images/2easystepstosavings-blueCY.jpg" alt="Need Electricity" ><br></div></div>
+                                                <div id="MainContent_upProdCard">
+						
+                                                        <div id="MainContent_pnlProdDet_exp" style="border-style:None;margin: 20px 20px 20px 20px;">
+							
+                                                            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                                                                <tr id="Exp_Prod_Header">
+                                                                    <td align="center" colspan="2" valign="middle" style="border: none;">
+                                                                        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                                                                            <tr>
+                                                                                <td style="width: 20px; border: none;"></td>
+                                                                                <td align="left" valign="top" id="ProdCell_expHead" style="border: none;">
+                                                                                    <br />
+                                                                                    <span>
+                                                                                        <span id="lblProductTitle" class="lblProd_Exp">PAYG Instant Online</span></span>
+                                                                                    <span>
+                                                                                        </span>
+                                                                                    <br />
+                                                                                    <br />
+                                                                                    <span>
+                                                                                        <span id="MainContent_lblProdHeader" class="lblProdDesc_exp">Prepaid Electricity</span></span><br />
+                                                                                    <br />
+                                                                                    <span>
+                                                                                        <span id="MainContent_lblProdDesc3" class="lblProdDesc2_exp">•	No Credit Check <br> •	No Deposit <br></span></span>
+                                                                                </td>
+                                                                                <td align="center" valign="middle" id="CostCell_expHead" style="border: none;">
+                                                                                    <span id="MainContent_lblCost" class="lblCost_Exp">10.1<b>¢</b></span><br />
+                                                                                    <span id="MainContent_lblEFLRateAt" class="lblEFlrate_exp">Energy Rate</span>
+                                                                                </td>
+                                                                                <td align="center" valign="middle" style="border: none;">
+                                                                                    <table id="BtnCell_expHead" width="100%" border="0" cellpadding="0" cellspacing="0"
+                                                                                        style="border: none;">
+                                                                                        <tr>
+                                                                                            <td align="center" valign="middle" style="border: none;">
+                                                                                                <input type="submit" name="ctl00$MainContent$btnSignup_big" value="Order Now" onclick="selectedproduct();" id="btnSignup_big" style="height:63px;" />
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr id="Exp_Prod_Body">
+                                                                    <td style="width: 20px; border: none;"></td>
+                                                                    <td align="center" valign="middle" style="border: none;">
+                                                                        <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border: none;">
+                                                                            <tr>
+                                                                                <td id="Body1_Exp" style="border: none;">
+                                                                                    <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border: none;">
+                                                                                        <tr>
+                                                                                            <td align="left" style="border: none;">
+                                                                                                <table border="0" cellpadding="0" cellspacing="0" style="border: none;">
+                                                                                                    <tr>
+                                                                                                        <td style="width: 15px; border: none;"></td>
+                                                                                                        <td align="left" valign="middle" style="border: none;">
+                                                                                                            <br />
+                                                                                                            <img src="images/bullet.png" alt="." style="height: 10px; width: 9px" />
+                                                                                                            <span id="MainContent_lblBody1" class="FrontierText">Energy Charges:</span>
+                                                                                                            <span id="MainContent_lblCost2" class="FrontierText">10.1¢/kWh</span><br />
+                                                                                                            <img src="images/bullet.png" alt="." style="height: 10px; width: 9px" />
+                                                                                                            <span id="MainContent_lblBody2" class="FrontierText">Rate Type:</span>
+                                                                                                            <span id="MainContent_lblRate_Type" class="FrontierText">Variable</span><br />
+                                                                                                            <img src="images/bullet.png" alt="." style="height: 10px; width: 9px" />
+                                                                                                            <span id="MainContent_lblBody3" class="FrontierText">Monthly Fee:</span>
+                                                                                                            <span id="MainContent_lblActiveMonthlyUsage" class="FrontierText">$0.00</span><br />
+                                                                                                            <img src="images/bullet.png" alt="." style="height: 10px; width: 9px" />
+                                                                                                            <span id="MainContent_lblBody4" class="FrontierText">Early Termination:</span>
+                                                                                                            <span id="MainContent_lblEarlyTermFee" class="FrontierText">$0.00</span><br />
+                                                                                                            <img src="images/bullet.png" alt="." style="height: 10px; width: 9px" />
+                                                                                                            <span id="MainContent_lblBody5" class="FrontierText">Requirements:</span>
+                                                                                                            <span id="MainContent_lblRequirements" class="FrontierText"></span>
+                                                                                                            <br />
+                                                                                                            <br />
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td align="left" style="border: none;">
+                                                                                                <span id="MainContent_lblDesc2" class="FrontierText">Email Questions:</span>
+                                                                                                <a onclick="gotoURL_newWindow(&#39;mailto:care@frontierutilities.com&#39;);" id="MainContent_lnkEmailQusetions" class="lblDesc_Grid" Target="_top" href="javascript:__doPostBack(&#39;ctl00$MainContent$lnkEmailQusetions&#39;,&#39;&#39;)" style="font-style: normal;">care@frontierutilities.com</a>
+                                                                                                <br />
+                                                                                                <span id="MainContent_Label4" class="FrontierText">Enroll via Phone:</span>
+                                                                                                <span id="MainContent_lnkEnrollViaPhone" class="lblDesc_Grid" style="font-style: normal; line-height: 40px;">1-877-437-7442</span>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                                <td align="center" id="Body2_Exp">
+                                                                                    <span id="MainContent_label122" class="lblSplFeatures_exp">Special Features</span><br />
+                                                                                    <br />
+                                                                                    
+                                                                                </td>
+                                                                                <td id="Body3_Exp" align="center" valign="middle">
+                                                                                    <span id="MainContent_lblprod_Note" class="runtext" style="display:inline-block;width:205px;">No deposit, no credit check and no contract term. Same-day service available. Smart Meter required.  You can review more details of this plan by downloading the documents at right. $0.49 daily fee applies.</span>
+                                                                                </td>
+                                                                                <td align="center" id="Body4_Exp" valign="middle">
+                                                                                    <table width="90%" border="0" cellpadding="0" cellspacing="0" style="border: none;">
+                                                                                        <tr>
+                                                                                            <td colspan="2" valign="top" style="border: none; height: 30px;">
+                                                                                                <b>
+                                                                                                    <span id="MainContent_labelLinks" class="runtext">Plan is subject to the following:</span></b>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td style="border: none;" valign="bottom">
+                                                                                                <img id="MainContent_img1" src="images/pdficon_large.png" />
+                                                                                            </td>
+                                                                                            <td style="border: none;" valign="middle" align="left">
+                                                                                                <a id="MainContent_lnkEFL" class="runtext" href="http://portal.frontierutilities.com/frontierefl2/eflviewer.aspx?lang=EN&amp;prodcode=IPAYGO&amp;tdspcode=CNP" target="_blank">Electricity Facts Label</a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td style="border: none;" valign="bottom">
+                                                                                                <img id="MainContent_img2" src="images/pdficon_large.png" />
+                                                                                            </td>
+                                                                                            <td style="border: none;" valign="middle" align="left">
+                                                                                                <a id="MainContent_lnkTermsOfUse" class="runtext" href="http://portal.frontierutilities.com/frontierefl2/eflviewer.aspx?lang=EN&amp;prodcode=TOS" target="_blank">Terms Of Service</a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td style="border: none;" valign="bottom">
+                                                                                                <input type="image" name="ctl00$MainContent$img3" id="MainContent_img3" src="images/pdficon_large.png" />
+                                                                                            </td>
+                                                                                            <td style="border: none;" valign="middle" align="left">
+                                                                                                <a id="MainContent_lnkRifgts" class="runtext" href="http://portal.frontierutilities.com/frontierefl2/eflviewer.aspx?lang=EN&amp;prodcode=YRAC" target="_blank">Your Rights as a Customer</a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr id="MainContent_trPDS">
+								<td style="border: none;" valign="bottom">
+                                                                                                <input type="image" name="ctl00$MainContent$img4" id="MainContent_img4" src="images/pdficon_large.png" />
+                                                                                            </td>
+								<td style="border: none;" valign="middle" align="left">
+                                                                                                <a id="MainContent_lnkPDS" class="runtext" href="http://portal.frontierutilities.com/frontierefl2/eflviewer.aspx?lang=EN&amp;prodcode=PDS" target="_blank">Prepaid Disclosure Statement</a>
+                                                                                            </td>
+							</tr>
+							
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        
+						</div>
+                                                    
+					</div>
+                                                <input type="hidden" name="ctl00$MainContent$PricePlanid_HF" id="MainContent_PricePlanid_HF" />
+                                                <div id="MainContent_divBelowCards"><a href="https://www.frontierutilities.com/Review-Frontier-Utilities" target="_blank" style="border: none;"><img src="https://www.frontierutilities.com/images/950x350-belowfold-family.jpg" alt="Community Partners" width="100%" style=" margin-bottom: 25px;"><br></a></div>
+
+                                                <div class="main-container">
+
+                                                    <div id="MainContent_divLeftBox" class="left-block"></div>
+
+                                                    <div id="MainContent_divRightBox" class="right-block"></div>
+
+                                                    <div class="clear"></div>
+
+                                                </div>
+                                            </td>
+				</tr>
+			</table>
+			
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+		</tr>
+		<tr>
+			<td>
+                        <div id="MainContent_msgPopup_updPopup">
+				
+  
+  <div id="warning" style="display:none;">
+    <span class="org-title">
+        <span id="MainContent_msgPopup_lblCaption"></span></span><br />
+    <br />
+    <span class="runtext">
+        <span id="MainContent_msgPopup_lblMessage"></span></span><br />
+    <br />
+    
+    <input type="submit" name="ctl00$MainContent$msgPopup$btnYes" value="OK" onclick="fnClickYes(&#39;ctl00$MainContent$msgPopup$btnYes&#39;,&#39;&#39;);" id="btnYes" />
+         
+    
+</div>
+  
+			</div>
+
+<script type="text/javascript">
+    function fnClickNo(sender, e) {
+        __doPostBack(sender, e);
+    }
+    function fnClickYes(sender, e) {
+        __doPostBack(sender, e);
+    }
+
+
+    function getFlickerSolved() {
+        document.getElementById('warning').style.display = 'none';
+    }
+</script>
+
+                    </td>
+		</tr>
+	</table>
+	
+            <div id="copyright">
+                <div id="copy01">
+                    <table border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="10" align="center">&nbsp;
+                            </td>
+                            <td width="42" height="64" align="center">
+                                <a href="https://www.facebook.com/frontierutilities" target="_blank" style="border: none;">
+                                    <img src="images/facebook.png" width="32" height="32" style="border: none;" />
+                                </a>
+                            </td>
+                            <td width="42" align="center">
+                                <a href="https://plus.google.com/100027729724664493907" target="_blank" rel="publisher"
+                                    style="border: none;">
+                                    <img src="images/gplus.png" width="32" height="32" style="border: none;" />
+                                </a>
+                            </td>
+                            <td width="42" align="center">
+                                <a href="https://twitter.com/frontieru" target="_blank">
+                                    <img src="images/twitter.png" width="32" height="32" style="border: none;" />
+                                </a>
+                            </td>
+                            <td width="42" align="center">
+                                <a href="http://www.linkedin.com/company/2495751?trk=tyah&trkInfo=tas%3Afrontier%20ut"
+                                    target="_blank" style="border: none;">
+                                    <img src="images/linked-in.png" width="32" height="32" style="border: none;" />
+                                </a>
+                            </td>
+                            <td width="42" align="center" style="border: none;">
+                                <img src="images/mobile-icon.png" width="32" height="32" style="border: none;" />
+                            </td>
+                            <td width="42" align="center" style="border: none;">
+                                <img src="images/lock.png" width="32" height="32" style="border: none;" />
+                            </td>
+                            <td width="96" align="center">
+                                <a href="http://www.bbb.org/houston/business-reviews/electric-companies/frontier-utilities-llc-in-houston-tx-90012559/"
+                                    target="_blank" style="border: none;">
+                                    <img src="images/bbb.png" width="85" height="32" style="border: none;" />
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="copy02">
+                    <a class="copy02top" href="https://www.frontierutilities.com/PRIVACY-POLICY" target="_blank">Privacy Policy</a> 
+                    <span style="color: #f39245;">| </span>
+                    <a class="copy02top" href="https://www.frontierutilities.com/TERMS-OF-USE" target="_blank">Terms of Use</a> 
+                    <br />
+                    Copyright 2015 Frontier Utilities, LLC. All Rights Reserved<span style="color: #f39245;"> | </span>PUC Certificate 10169
+                    <br />
+                    5161 San Felipe, Ste. 320 <span style="color: #f39245;">| </span>Houston, TX 77056 <span style="color: #f39245;">|</span> 877-437-7442
+                    <br />
+                    <a href="mailto:onlinecare@frontierutilities.com" target="_blank" style="color: #f39245;">
+                    <span style="color: #f39245;">care@frontierutilities.com </span></a>
+                    <span style="color: #f39245;">| </span>
+                    <a href="https://www.frontierutilities.com/PowerOutage" target="_blank" style="color: #f39245;">
+                    <span style="color: #f39245;">Click here </span> </a>to report power outages
+                </div>
+            </div>
+        
+</div>
+    
+    <!-- Animation Control pending -->
+    <script language="javascript" type="text/javascript">
+
+        function selectedproduct() {
+            var prod = document.getElementById('lblProductTitle');
+            _gaq.push(['_setCustomVar',
+                       2,
+                       'ProductName',
+                        prod.innerText,
+                        2
+            ]);
+            _gaq.push(['_trackEvent',
+                     'Products',
+                     'ProductSelected',
+            ]);
+        }
+
+        function ValidateZipCode() {
+            var tzip = document.getElementById("txtZipCode");
+            var taddr = document.getElementById("MainContent_txtServAddress");
+            var lzip = document.getElementById("lblZipStatus");
+            var vzip = tzip.value;
+            if (vzip == "" || vzip.length != 5) {
+                taddr.disabled = true;
+                taddr.innerHTML = "";
+                lzip.innerHTML = "Invalid Zip Code";
+                tzip.style.border = "2px Red Solid";
+                tzip.focus();
+            } else {
+                tzip.style.border = "2px Green Solid";
+                lzip.innerHTML = "";
+                taddr.disabled = false;
+                taddr.focus();
+            }
+        }
+
+        function OnClientPopulating(sender, e) {
+            var zip = document.getElementById('txtZipCode').value;
+            sender.set_contextKey(zip);
+            sender._element.className = "loading";
+        }
+
+        function getServAddressStatus() {
+
+            document.getElementById('lblServAddrStatus').innerHTML = "";
+
+            var varStr = document.getElementById('hidden_esiid');
+            $.ajax({
+                type: "POST",
+                url: 'GetDataFromServer.aspx?sentFrom=ServTypeCheck&str=' + varStr.value,
+                data: '{}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    var ret = parseJson(data);
+
+                    //alert('result: ' + ret);
+                    document.getElementById('btnConfirm').style.display = ret == true ? "block" : "none";
+                    if (document.getElementById('btnConfirm').style.display = ret == true) {
+                        document.getElementById("MainContent_txtServAddress").className = "selectcomplete";
+                    }
+                    else {
+                        document.getElementById("MainContent_txtServAddress").className = "";
+                    }
+                    //document.getElementById('btnConfirm').style.display = ret == true ? "block" : "none";
+                    document.getElementById('lblServAddrStatus').innerHTML = ret == true ? "" : "This address is currently listed as our customer. Please call us if you have any questions.";
+                    //                    if (ret = true)
+                    document.getElementById("MainContent_txtServAddress").focus();
+                    return ret;
+                },
+                onFailure: function () {
+                    //alert('Ajax Failure');
+                    return true;
+                },
+                statusCode: {
+                    404: function () {
+                        //alert("missing info");
+                        return true;
+                    }
+                },
+                error: function (data, errorThrown) {
+                    //alert("Fail");
+                    //alert(data.statusText);
+                    return true;
+                }
+            });
+        }
+        function movetoNext(current) {
+            var tsaddr = document.getElementById("MainContent_txtServAddress");
+            tsaddr.value = "";
+            tsaddr.disabled = false;
+            if (current.value.length >= current.maxLength) {
+                tsaddr.focus();
+            }
+        }
+        function gotoURL_newWindow(url) {
+            window.open(url, '_top');
+        }
+        function SetTxtServAddressFocus() {
+            //alert();
+            document.getElementById("MainContent_txtServAddress").focus();
+        }
+    </script>
+
+    <!-- Google Code for Remarketing Tag -->
+    <!--------------------------------------------------
+Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. See more information and instructions on how to setup the tag on: http://google.com/ads/remarketingsetup
+--------------------------------------------------->
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        var google_conversion_id = 981731956;
+        var google_custom_params = window.google_tag_params;
+        var google_remarketing_only = true;
+        /* ]]> */
+    </script>
+    <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+    </script>
+    <noscript>
+        <div style="display: inline;">
+            <img height="1" width="1" style="border-style: none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/981731956/?guid=ON&amp;script=0" />
+        </div>
+    </noscript>
+
+            </div>
+
+        </div>
+    
+
+<script type="text/javascript">
+//<![CDATA[
+WebForm_AutoFocus('MainContent_lnkEFL');Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.ModalPopupBehavior, {"BackgroundCssClass":"modalBackground","OnCancelScript":"getFlickerSolved()","PopupControlID":"warning","dynamicServicePath":"/Webenrollment/LandingPage.aspx","id":"MainContent_msgPopup_mpext"}, null, null, $get("warning"));
+});
+Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.Animation.UpdatePanelAnimationBehavior, {"OnUpdated":"{\"AnimationName\":\"Parallel\",\"duration\":\"0\",\"AnimationChildren\":[{\"AnimationName\":\"FadeIn\",\"minimumOpacity\":\".5\",\"AnimationChildren\":[]},{\"AnimationName\":\"EnableAction\",\"TargetScript\":\"$get(\\u0027btnPreview\\u0027)\",\"Enabled\":\"true\",\"AnimationChildren\":[]},{\"AnimationName\":\"ScriptAction\",\"Script\":\"onUpdated();\",\"AnimationChildren\":[]}]}","OnUpdating":"{\"AnimationName\":\"Parallel\",\"duration\":\"0\",\"AnimationChildren\":[{\"AnimationName\":\"ScriptAction\",\"Script\":\"onUpdating();\",\"AnimationChildren\":[]},{\"AnimationName\":\"EnableAction\",\"TargetScript\":\"$get(\\u0027btnPreview\\u0027)\",\"Enabled\":\"false\",\"AnimationChildren\":[]},{\"AnimationName\":\"FadeOut\",\"minimumOpacity\":\".5\",\"AnimationChildren\":[]}]}","id":"animation5"}, null, null, $get("MainContent_upd123"));
+});
+//]]>
+</script>
+</form>
+
+    <!-- Google Code for Remarketing Tag -->
+    <!--------------------------------------------------
+    Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. See more information and instructions on how to setup the tag on: http://google.com/ads/remarketingsetup
+    --------------------------------------------------->
+    
+</body>
+</html>
