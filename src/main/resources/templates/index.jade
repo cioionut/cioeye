@@ -18,9 +18,35 @@ body
         h1 #{locales.title}
         .row
             .col-md-12
-                form.col-md-4(method='get', action='search')
-                    input.form-control(type='text', name='querystr', placeholder='...')
+                form.col-md-12(method='get', action='search')
+                    .form-group
+                        label Cauta:
+                        input.form-control(type='text', name='querystr', placeholder='...', id='query')
+                    .form-group.col-md-4
+                        label Data de start:
+                        input.form-control(type='date', name='start_date')
+                    .form-group.col-md-4
+                        label Data de final:
+                        input.form-control(type='date', name='end_date')
+
+                    .form-group.col-md-4
+                        label Formatul fisierelor:
+                        .checkbox
+                            label
+                                input(type='checkbox', name='content_type', value='text/plain')
+                                span .txt
+                        .checkbox
+                            label
+                                input(type='checkbox', name='content_type', value='text/html')
+                                span .html
+                        .checkbox
+                            label
+                                input(type='checkbox', name='content_type', value='application/pdf')
+                                span .pdf
+
                     button.btn.btn-info(type='submit') #{locales.search_label}
+
+
         hr
         .row
         if (searchResults && queryStats)

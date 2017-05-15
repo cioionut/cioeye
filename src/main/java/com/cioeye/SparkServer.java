@@ -4,13 +4,12 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.index.*;
 import org.apache.lucene.queries.TermsQuery;
 import org.apache.lucene.queryparser.classic.ParseException;
-import org.apache.lucene.search.PhraseQuery;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.*;
 import org.apache.lucene.search.highlight.InvalidTokenOffsetsException;
 import org.apache.lucene.search.highlight.QueryTermExtractor;
 import org.apache.lucene.search.highlight.WeightedTerm;
+import org.apache.lucene.search.similarities.ClassicSimilarity;
+import org.apache.lucene.search.similarities.TFIDFSimilarity;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.BytesRef;
@@ -105,6 +104,9 @@ public class SparkServer {
                 " documents found. Time :" + (endTime - startTime));
         for(ScoreDoc scoreDoc : hits.scoreDocs) {
             System.out.println(scoreDoc.score);
+            // Query query = searcher.queryParser.parse(searchQuery);
+            // Explanation explanation = searcher.indexSearcher.explain(query, scoreDoc.doc);
+            // System.out.println(explanation);
             Document doc = searcher.getDocument(scoreDoc);
             // String[] terms_list = searchQuery.split("\\s+");
             Map<String, String> termToFreq = getTFIDF(searchQuery, scoreDoc.doc, searcher);
@@ -130,7 +132,7 @@ public class SparkServer {
     private static Map<String, String> getTFIDF(String searchQuery, int nrdoc, Searcher searcher)
             throws IOException, ParseException, InvalidTokenOffsetsException {
 
-        Map<String, Long> termToFreq = new HashMap<>();
+        Map<String, Double> termToFreq = new HashMap<>();
         Terms termVector = searcher.indexSearcher.getIndexReader().getTermVector(nrdoc, LuceneConstants.CONTENTS);
 
         TermsEnum itr = termVector.iterator();
@@ -138,10 +140,18 @@ public class SparkServer {
 
         while ((termref = itr.next()) != null) {
             String termText = termref.utf8ToString();
-            long termFreq = itr.totalTermFreq();
+            long tf = itr.totalTermFreq();
+            double termFreq = 0;
+            if (tf > 0) {
+                termFreq = 1 + Math.log10((double)tf);
+                // termFreq = Math.sqrt(itr.totalTermFreq());
+            }
+            TFIDFSimilarity classic_sim = new ClassicSimilarity();
+//            termFreq = classic_sim.tf(itr.totalTermFreq());
             termToFreq.put(termText, termFreq);
             // long docCount = itr.docFreq();
-            // System.out.println("term: "+termText+", termFreq = "+termFreq+", docCount = "+docCount);
+            // System.out.println("term: "+termText+",termFreq = 1 + Math.log10((double)tf);
+                // termFreq = Math.sqrt(itr.totalTermF termFreq = "+termFreq+", docCount = "+docCount);
         }
         String[] queryWords = searchQuery.split(" ");
         Map<String, String> qtermToTfIdf = new HashMap<>();
@@ -155,11 +165,16 @@ public class SparkServer {
                 long N = searcher.indexSearcher.getIndexReader().numDocs();
                 double idf = 0;
                 if (df != 0) {
-                    idf = Math.log(N / df);
+                    idf = Math.log10((double) N / (double) df);
+                    // idf = 1.0 + Math.log((double)(N + 1) / (double)(df + 1));
+                    // TFIDFSimilarity classic_sim = new ClassicSimilarity();
+                    // idf = classic_sim.idf(df, N);
                 }
                 if (termToFreq.containsKey(sterm)) {
                     double tf_idf = termToFreq.get(sterm) * idf;
                     qtermToTfIdf.put(word, String.format("%.3g%n", tf_idf));
+                    System.out.println(word + " tf:" + termToFreq.get(sterm) + " df:"
+                            + df + " idf:" + idf + " tf-idf:" + tf_idf + " N:" + N);
                 }
             }
         }
@@ -182,9 +197,12 @@ public class SparkServer {
                 //        searcher.indexSearcher.getIndexReader().totalTermFreq(termInstance));
                 long df = (long) searcher.indexSearcher.getIndexReader().docFreq(termInstance);
                 long N = searcher.indexSearcher.getIndexReader().numDocs();
-                double idf = 0;
+                double idf = 0.;
                 if (df != 0) {
-                    idf = Math.log(N / df);
+                    idf = Math.log10((double) N / (double) df);
+                    // idf = 1.0 + Math.log((double)(N + 1) / (double)(df + 1));
+                    // TFIDFSimilarity classic_sim = new ClassicSimilarity();
+                    // idf = classic_sim.idf(df, N);
                 }
                 qtermFreq.put("IDF", String.format("%.3g%n", idf));
                 qtermToStats.put(word, qtermFreq);

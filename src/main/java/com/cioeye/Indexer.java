@@ -57,33 +57,42 @@ class Indexer {
 
     private Document getDocument(File file) throws IOException {
         Document document = new Document();
+        Path filePath = file.toPath();
         //index file contents
         FieldType type = new FieldType();
         type.setStored(true);
         type.setStoreTermVectors(true);
         type.setIndexOptions(IndexOptions.DOCS_AND_FREQS);
+        // index file content
         Field contentField = new Field(
                 LuceneConstants.CONTENTS,
                 readFileString(file),
                 type);
-//        TextField contentField = new TextField(
-//                LuceneConstants.CONTENTS,
-//                readFileString(file.getCanonicalPath()),
-//                Field.Store.YES);
-        //index file name
+        // index file name
         StringField fileNameField = new StringField(
                 LuceneConstants.FILE_NAME,
                 file.getName(),
                 Field.Store.YES);
-        //index file path
+        // index file path
         StringField filePathField = new StringField(
                 LuceneConstants.FILE_PATH,
                 file.getCanonicalPath(),
                 Field.Store.YES);
+        // index file content_type
+        StringField content_type = new StringField(
+                LuceneConstants.FILE_CONTENT_TYPE,
+                Files.probeContentType(filePath),
+                Field.Store.YES);
+        // index file created_date
+        LongPoint modified = new LongPoint(
+                LuceneConstants.FILE_MODIFIED,
+                file.lastModified());
 
         document.add(contentField);
         document.add(fileNameField);
         document.add(filePathField);
+        document.add(content_type);
+        document.add(modified);
 
         return document;
     }
