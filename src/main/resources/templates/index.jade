@@ -23,25 +23,25 @@ body
                         label Cauta:
                         input.form-control(type='text', name='querystr', placeholder='...', id='query')
                     .form-group.col-md-4
-                        label Data de start:
+                        label Data de editare start:
                         input.form-control(type='date', name='start_date')
                     .form-group.col-md-4
-                        label Data de final:
+                        label Data de editare final:
                         input.form-control(type='date', name='end_date')
 
                     .form-group.col-md-4
                         label Formatul fisierelor:
                         .checkbox
                             label
-                                input(type='checkbox', name='content_type', value='text/plain')
+                                input(type='checkbox', name='content_type1', value='text/plain', checked)
                                 span .txt
                         .checkbox
                             label
-                                input(type='checkbox', name='content_type', value='text/html')
+                                input(type='checkbox', name='content_type2', value='text/html', checked)
                                 span .html
                         .checkbox
                             label
-                                input(type='checkbox', name='content_type', value='application/pdf')
+                                input(type='checkbox', name='content_type3', value='application/pdf', checked)
                                 span .pdf
 
                     button.btn.btn-info(type='submit') #{locales.search_label}
@@ -57,6 +57,7 @@ body
                 .list-group
                     a.list-group-item
                         h3 !{doc_info.title}
+                        p !{doc_info.modified_date}
                         p !{doc_info.hlfrag}
                         p Score: #{doc_info.score}
                         each tf_idf, term in doc_info.tf

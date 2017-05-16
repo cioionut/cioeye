@@ -4,6 +4,8 @@ import java.io.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Files;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.ro.RomanianAnalyzer;
@@ -84,15 +86,21 @@ class Indexer {
                 Files.probeContentType(filePath),
                 Field.Store.YES);
         // index file created_date
+        Long modified_date = file.lastModified();
         LongPoint modified = new LongPoint(
                 LuceneConstants.FILE_MODIFIED,
-                file.lastModified());
+                modified_date);
+        StringField modified_date_field = new StringField(
+                LuceneConstants.FILE_MODIFIED_DATE,
+                getStringDate(modified_date),
+                Field.Store.YES);
 
         document.add(contentField);
         document.add(fileNameField);
         document.add(filePathField);
         document.add(content_type);
         document.add(modified);
+        document.add(modified_date_field);
 
         return document;
     }
@@ -146,5 +154,13 @@ class Indexer {
     static String getTextFromHtml(File file) throws IOException {
         String html = getTextFromTxt(file);
         return Jsoup.parse(html).text();
+    }
+
+    private static String getStringDate(Long long_date) {
+        Date date = new Date(long_date);
+        String sdate;
+        SimpleDateFormat data_format = new SimpleDateFormat("dd-MM-yyyy");
+        sdate = data_format.format(date);
+        return sdate;
     }
 }

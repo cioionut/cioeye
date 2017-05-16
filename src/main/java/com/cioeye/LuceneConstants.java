@@ -6,5 +6,6 @@ class LuceneConstants {
     static final String FILE_PATH="filepath";
     static final String FILE_CONTENT_TYPE="content_type";
     static final String FILE_MODIFIED="modified";
+    static final String FILE_MODIFIED_DATE="modified_date";
     static final int MAX_SEARCH = 10;
 }

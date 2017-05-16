@@ -1,5 +1,6 @@
 package com.cioeye;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.*;
 import org.apache.lucene.queries.TermsQuery;
@@ -16,13 +17,14 @@ import org.apache.lucene.util.BytesRef;
 import spark.ModelAndView;
 import spark.template.jade.JadeTemplateEngine;
 
-import javax.print.Doc;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.text.SimpleDateFormat;
 
 import static spark.Spark.get;
 import static spark.Spark.port;
@@ -56,8 +58,22 @@ public class SparkServer {
                 Searcher searcher = new Searcher(reader, analyzer);
 
                 String search_text = req.queryParams("querystr");
-                Map<String, Object> queryStats = getQueryStats(search_text, searcher);
-                ArrayList<Object> searchResults = search(search_text, searcher);
+                String[] content_type = new String[]{req.queryParams("content_type1"),
+                                                    req.queryParams("content_type2"),
+                                                    req.queryParams("content_type3")};
+                String sstart_date = req.queryParams("start_date");
+                String send_date = req.queryParams("end_date");
+
+                long start_date = getDateInLong(sstart_date);
+                long end_date = getDateInLong(send_date);
+                if (end_date == 0)
+                    end_date = Long.MAX_VALUE;
+                Map<String, Object> queryStats = new HashMap<>();
+                ArrayList<Object> searchResults = new ArrayList<>();
+                if (!search_text.equals("")){
+                    queryStats = getQueryStats(search_text, searcher);
+                    searchResults = search(search_text, content_type, start_date, end_date, searcher, analyzer);
+                }
                 map.put("searchResults", searchResults);
                 map.put("queryStats", queryStats);
                 reader.close();
@@ -91,11 +107,12 @@ public class SparkServer {
                 +(endTime-startTime)+" ms");
     }
 
-    public static ArrayList<Object> search(String searchQuery, Searcher searcher)
+    public static ArrayList<Object> search(String searchQuery, String[] content_type,
+                                           long start_date, long end_date, Searcher searcher, RoAnalyzer analyzer)
             throws IOException, ParseException, InvalidTokenOffsetsException {
 
         long startTime = System.currentTimeMillis();
-        TopDocs hits = searcher.search(searchQuery);
+        TopDocs hits = searcher.search(searchQuery, start_date, end_date);
         long endTime = System.currentTimeMillis();
 
         ArrayList<Object> doc_list = new ArrayList<>();
@@ -103,28 +120,31 @@ public class SparkServer {
         System.out.println(hits.totalHits +
                 " documents found. Time :" + (endTime - startTime));
         for(ScoreDoc scoreDoc : hits.scoreDocs) {
-            System.out.println(scoreDoc.score);
             // Query query = searcher.queryParser.parse(searchQuery);
             // Explanation explanation = searcher.indexSearcher.explain(query, scoreDoc.doc);
             // System.out.println(explanation);
             Document doc = searcher.getDocument(scoreDoc);
-            // String[] terms_list = searchQuery.split("\\s+");
-            Map<String, String> termToFreq = getTFIDF(searchQuery, scoreDoc.doc, searcher);
-            String[] fragments = searcher.getHlFragments(searchQuery, new RoAnalyzer(), doc);
-            System.out.println("File: "
-                    + doc.get(LuceneConstants.FILE_PATH));
-            StringBuilder hlfrag = new StringBuilder();
-            for(String frag : fragments) {
-                System.out.printf(frag + '\n');
-                hlfrag.append(frag).append('\n');
-            }
-            Map<String, Object> doc_map = new HashMap<>();
-            doc_map.put("title", doc.get(LuceneConstants.FILE_NAME));
-            doc_map.put("hlfrag", hlfrag.toString());
-            doc_map.put("score", String.format("%.3g%n", scoreDoc.score));
-            doc_map.put("tf", termToFreq);
+            if (ArrayUtils.contains(content_type, doc.get(LuceneConstants.FILE_CONTENT_TYPE))){
+                System.out.println(scoreDoc.score);
+                // String[] terms_list = searchQuery.split("\\s+");
+                Map<String, String> termToFreq = getTFIDF(searchQuery, scoreDoc.doc, searcher);
+                String[] fragments = searcher.getHlFragments(searchQuery, new RoAnalyzer(), doc);
+                System.out.println("File: "
+                        + doc.get(LuceneConstants.FILE_PATH));
+                StringBuilder hlfrag = new StringBuilder();
+                for(String frag : fragments) {
+                    System.out.printf(frag + '\n');
+                    hlfrag.append(frag).append('\n');
+                }
+                Map<String, Object> doc_map = new HashMap<>();
+                doc_map.put("title", doc.get(LuceneConstants.FILE_NAME));
+                doc_map.put("hlfrag", hlfrag.toString());
+                doc_map.put("score", String.format("%.3g%n", scoreDoc.score));
+                doc_map.put("tf", termToFreq);
+                doc_map.put("modified_date", doc.get(LuceneConstants.FILE_MODIFIED_DATE));
 
-            doc_list.add(doc_map);
+                doc_list.add(doc_map);
+            }
         }
         return doc_list;
     }
@@ -208,8 +228,17 @@ public class SparkServer {
                 qtermToStats.put(word, qtermFreq);
             }
         }
-
         return qtermToStats;
+    }
+
+    private static long getDateInLong(String string_date)
+            throws java.text.ParseException {
+        if (!string_date.equals("")) {
+            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+            Date d = dateformat.parse(string_date);
+            return d.getTime();
+        }
+        return 0;
     }
 }
 
